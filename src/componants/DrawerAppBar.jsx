@@ -26,11 +26,13 @@ const DrawerAppBar = () => {
     return (
         <>
             <Box>
-                <AppBar>
+                <AppBar position="fixed" color="warning" sx={{ background: '#0B0B45' }}>
                     <Toolbar>
                         <IconButton onClick={() => openDrawer()} edge="start" color="inherit" sx={{ mr: 2 }}>
                             <MenuIcon />
                         </IconButton>
+
+                        <Typography variant='h4'>Food Admin</Typography>
 
                         <Drawer open={isDrawerOpen} onClose={closeDrawer}>
                             <Typography variant='h4' sx={{
@@ -54,7 +56,7 @@ const DrawerAppBar = () => {
                                     }}
                                 >
                                     <ListItemIcon>
-                                        <DashboardIcon />
+                                        <DashboardIcon sx={{ color: "indigo", fontSize: 24 }}/>
                                     </ListItemIcon>
                                     <ListItemText>Dashboard</ListItemText>
                                 </ListItem>
@@ -72,7 +74,7 @@ const DrawerAppBar = () => {
                                     }}
                                 >
                                     <ListItemIcon>
-                                        <AddCircleIcon />
+                                        <AddCircleIcon sx={{ color: "firebrick", fontSize: 24 }}/>
                                     </ListItemIcon>
                                     <ListItemText>Add Dish</ListItemText>
                                 </ListItem>
@@ -90,7 +92,7 @@ const DrawerAppBar = () => {
                                     }}
                                 >
                                     <ListItemIcon>
-                                        <FastfoodIcon />
+                                        <FastfoodIcon sx={{ color: "orange", fontSize: 24 }} />
                                     </ListItemIcon>
                                     <ListItemText>All Dishes</ListItemText>
                                 </ListItem>
@@ -108,7 +110,7 @@ const DrawerAppBar = () => {
                                     }}
                                 >
                                     <ListItemIcon>
-                                        <ShoppingCartIcon />
+                                        <ShoppingCartIcon sx={{ color: "primary.main", fontSize: 24 }}/>
                                     </ListItemIcon>
                                     <ListItemText>Orders</ListItemText>
                                 </ListItem>
@@ -126,7 +128,7 @@ const DrawerAppBar = () => {
                                     }}
                                 >
                                     <ListItemIcon>
-                                        <ReviewsIcon />
+                                        <ReviewsIcon sx={{ color: "darkmagenta", fontSize: 24 }}/>
                                     </ListItemIcon>
                                     <ListItemText>Reviews</ListItemText>
                                 </ListItem>
@@ -144,7 +146,7 @@ const DrawerAppBar = () => {
                                     }}
                                 >
                                     <ListItemIcon>
-                                        <AccountBoxIcon />
+                                        <AccountBoxIcon sx={{ color: "darkblue", fontSize: 24 }}/>
                                     </ListItemIcon>
                                     <ListItemText>Customers</ListItemText>
                                 </ListItem>

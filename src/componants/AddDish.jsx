@@ -48,31 +48,42 @@ const AddDish = () => {
             gap: 1.5,
             p: 3,
             boxShadow: 3,
-            borderRadius: 2
+            height: '100%'
           }}
         >
-          <Typography variant='h5' sx={{ textAlign: 'center' }}>Add Dish</Typography>
+          <Typography variant="h4"
+                    align="center"
+                    sx={{
+                        fontWeight: 700,
+                        fontSize: '2rem',
+                        background: 'linear-gradient(90deg, #FF9800, #FFC107)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
+                        mb: 1,
+                    }}
+          >Add Dish</Typography>
 
           <TextField
             type='text'
             name='foodname'
             label='Dish Name'
             variant='outlined'
-            fullWidth />
-
+             />
+ 
           <TextField
             type='text'
             name='description'
             label='Description'
             variant='outlined'
-            fullWidth />
+             />
 
           <TextField
             type='number'
             name='price'
             label='Price'
             variant='outlined'
-            fullWidth />
+             />
 
           <FormControl>
             <FormLabel>Select Category</FormLabel>
@@ -90,11 +101,24 @@ const AddDish = () => {
             name="foodimage"
             label='Dish Image'
             variant='outlined'
-            fullWidth />
+             />
 
-          <Button type='submit' variant='contained' color='warning' sx={{
-            mt: 2
-          }}>Add Dish</Button>
+          <Button type='submit' variant='contained' color='warning' 
+          sx={{
+              borderRadius: '999px',
+              textTransform: 'uppercase',
+              minWidth: '120px',
+              height: '45px',
+              fontWeight: 'bold',
+              fontSize: '20px',
+              background: "#fd8d1d",
+              background: "linear-gradient(90deg, rgb(253, 104, 29) 0%, rgb(249, 227, 29) 100%)",
+              transition: 'all 0.2s ease-in-out',
+              '&:hover': {
+                translate: "0 6px",
+                boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px"
+              }
+            }}>Add Dish</Button>
         </Box>
         
       </Box>
