@@ -4,6 +4,8 @@ import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import UpgradeIcon from '@mui/icons-material/Upgrade';
 import React, { useEffect, useState } from 'react'
 
+//Update Order Status Dialog Admin
+//fetch orders using axios and material-react-table
 const Orders = () => {
 
   const [allOrders, setallOrders] = useState([])
