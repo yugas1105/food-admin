@@ -1,25 +1,41 @@
-import { Box, Button, ButtonGroup, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Tooltip, Typography } from '@mui/material'
-import axios from 'axios'
-import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
-import UpgradeIcon from '@mui/icons-material/Upgrade';
-import React, { useEffect, useState } from 'react'
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import axios from "axios";
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+} from "material-react-table";
+import UpgradeIcon from "@mui/icons-material/Upgrade";
+import { useEffect, useState } from "react";
 
 //Update Order Status Dialog Admin
 //fetch orders using axios and material-react-table
 const Orders = () => {
+  const [allOrders, setallOrders] = useState([]);
 
-  const [allOrders, setallOrders] = useState([])
+  const [isLoading, setisLoading] = useState(false);
 
-  const [isLoading, setisLoading] = useState(false)
+  const [isOpen, setisOpen] = useState(false);
 
-  const [isOpen, setisOpen] = useState(false)
-
-  const [ordStatus, setordStatus] = useState("")
-  const [ordId, setordId] = useState("")
+  const [ordStatus, setordStatus] = useState("");
+  const [ordId, setordId] = useState("");
 
   useEffect(() => {
     let fetchOrders = async () => {
-      setisLoading(true)
+      setisLoading(true);
       try {
         let result = await axios.get(`http://localhost:5000/api/fetchorder`);
         let data = result.data;
@@ -27,91 +43,96 @@ const Orders = () => {
       } catch (error) {
         console.log(error);
       } finally {
-        setisLoading(false)
+        setisLoading(false);
       }
-    }
-    fetchOrders()
-  }, [])
+    };
+    fetchOrders();
+  }, []);
 
   let updateOrderStatus = async (orderId, status) => {
     try {
       let result = await axios.put(`http://localhost:5000/api/updateorder`, {
         orderId,
-        status
-      })
-      alert("Order Status Updated Successfully")
-      setordId("")
-      setordStatus("")
-      setisOpen(false)
+        status,
+      });
+      alert("Order Status Updated Successfully");
+      setordId("");
+      setordStatus("");
+      setisOpen(false);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   let columns = [
     {
       accessorKey: "createdAt",
       header: "Order Date",
-      Cell: ({ cell }) => new Date(cell.getValue()).toLocaleString()
+      Cell: ({ cell }) => new Date(cell.getValue()).toLocaleString(),
     },
     {
       accessorKey: "customer.name",
-      header: "Customer Name"
+      header: "Customer Name",
     },
     {
       accessorKey: "customer.email",
-      header: "Customer Email"
+      header: "Customer Email",
     },
     {
       accessorKey: "status",
-      header: "Order Status"
+      header: "Order Status",
     },
     {
       accessorKey: "totalPrice",
-      header: "Order Total"
+      header: "Order Total",
     },
     {
       accessorFn: (row) => row,
       header: "Actions",
       Cell: ({ cell }) => {
-        let row = cell.getValue()
+        let row = cell.getValue();
         return (
           <Tooltip title="Update Status">
             <UpgradeIcon
-              variant='contained'
-              color='primary'
+              variant="contained"
+              color="primary"
               onClick={() => {
                 console.log("DATA", row);
-                setisOpen(true)
-                setordId(row._id)
+                setisOpen(true);
+                setordId(row._id);
               }}
             />
           </Tooltip>
-        )
-      }
-    }
-  ]
+        );
+      },
+    },
+  ];
 
   let orderTable = useMaterialReactTable({
     columns: columns,
-    data: allOrders
-  })
+    data: allOrders,
+  });
 
   if (isLoading) {
     return (
-      <Box sx={{ mt: 10, textAlign: 'center' }}>
-        <Typography variant='h5'>Loading...</Typography>
+      <Box sx={{ mt: 10, textAlign: "center" }}>
+        <Typography variant="h5">Loading...</Typography>
       </Box>
-    )
+    );
   }
 
   return (
     <>
       <Box>
-        <Typography variant='h5' sx={{
-          mt: 10,
-          textAlign: 'center'
-        }}>Orders</Typography>
+        <Typography
+          variant="h5"
+          sx={{
+            mt: 10,
+            textAlign: "center",
+          }}
+        >
+          Orders
+        </Typography>
       </Box>
 
       <MaterialReactTable table={orderTable} />
@@ -123,16 +144,34 @@ const Orders = () => {
             <FormControl>
               <FormLabel>Order Status</FormLabel>
               <RadioGroup row onChange={(e) => setordStatus(e.target.value)}>
-                <FormControlLabel control={<Radio />} value='Confirmed' label='Confirmed' />
-                <FormControlLabel control={<Radio />} value='Preparing' label='Preparing' />
-                <FormControlLabel control={<Radio />} value='Out-for-delivery' label='Dispatch' />
-                <FormControlLabel control={<Radio />} value='Delivered' label='Delivered' />
+                <FormControlLabel
+                  control={<Radio />}
+                  value="Confirmed"
+                  label="Confirmed"
+                />
+                <FormControlLabel
+                  control={<Radio />}
+                  value="Preparing"
+                  label="Preparing"
+                />
+                <FormControlLabel
+                  control={<Radio />}
+                  value="Out-for-delivery"
+                  label="Dispatch"
+                />
+                <FormControlLabel
+                  control={<Radio />}
+                  value="Delivered"
+                  label="Delivered"
+                />
               </RadioGroup>
             </FormControl>
             <DialogActions>
-              <Button onClick={() => {
-                updateOrderStatus(ordId, ordStatus)
-              }}>
+              <Button
+                onClick={() => {
+                  updateOrderStatus(ordId, ordStatus);
+                }}
+              >
                 Update
               </Button>
             </DialogActions>
@@ -140,7 +179,7 @@ const Orders = () => {
         </Dialog>
       </Box>
     </>
-  )
-}
+  );
+};
 
-export default Orders
+export default Orders;
