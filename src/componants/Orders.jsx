@@ -20,16 +20,15 @@ import {
 } from "material-react-table";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import { useEffect, useState } from "react";
+import { useAlert } from "../custom/CustomAlert";
 
 //Update Order Status Dialog Admin
 //fetch orders using axios and material-react-table
 const Orders = () => {
   const [allOrders, setallOrders] = useState([]);
-
+  const { showAlert } = useAlert();
   const [isLoading, setisLoading] = useState(false);
-
   const [isOpen, setisOpen] = useState(false);
-
   const [ordStatus, setordStatus] = useState("");
   const [ordId, setordId] = useState("");
 
@@ -49,26 +48,27 @@ const Orders = () => {
     fetchOrders();
   }, []);
 
-  let updateOrderStatus = async (orderId, status) => {
-    try {
-      let result = await axios.put(`http://localhost:5000/api/updateorder`, {
-        orderId,
-        status,
-      });
-      alert("Order Status Updated Successfully");
-      setordId("");
-      setordStatus("");
-      setisOpen(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  
+    let updateOrderStatus = async (orderId, status) => {
+      try {
+        let result = await axios.put(`http://localhost:5000/api/updateorder`, {
+          orderId,
+          status,
+        });
+        showAlert("Order Status Updated Successfully", "success");
+        setordId("");
+        setordStatus("");
+        setisOpen(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
   let columns = [
     {
       accessorKey: "createdAt",
       header: "Order Date",
-      Cell: ({ cell }) => new Date(cell.getValue()).toLocaleString(),
+      Cell: ({ cell }) => new Date(cell.getValue()).toLocaleDateString(),
     },
     {
       accessorKey: "customer.name",
@@ -111,6 +111,46 @@ const Orders = () => {
   let orderTable = useMaterialReactTable({
     columns: columns,
     data: allOrders,
+    enablePagination: false,
+
+    // Set consistent row height
+    muiTableBodyRowProps: () => ({
+      sx: {
+        height: 50,
+        "&:hover": {
+          backgroundColor: "#f5f5f5",
+        },
+      },
+    }),
+
+    // Style body cells (including text wrapping)
+    muiTableBodyCellProps: {
+      sx: {
+        whiteSpace: "normal",
+        wordBreak: "break-word",
+        fontSize: "0.95rem",
+        padding: "12px",
+        verticalAlign: "top",
+      },
+    },
+
+    // Optional: style header cells
+    muiTableHeadCellProps: {
+      sx: {
+        backgroundColor: "#1976d2",
+        color: "#ffffff",
+        fontWeight: "bold",
+        fontSize: "1rem",
+      },
+    },
+
+    // Optional: add hover or border effects to the table container
+    muiTableContainerProps: {
+      sx: {
+        borderRadius: "8px",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+      },
+    },
   });
 
   if (isLoading) {
@@ -167,11 +207,7 @@ const Orders = () => {
               </RadioGroup>
             </FormControl>
             <DialogActions>
-              <Button
-                onClick={() => {
-                  updateOrderStatus(ordId, ordStatus);
-                }}
-              >
+              <Button onClick={() => updateOrderStatus(ordId, ordStatus)}>
                 Update
               </Button>
             </DialogActions>

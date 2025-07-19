@@ -8,12 +8,15 @@ import {
   RadioGroup,
   TextField,
   Typography,
+  Card,
 } from "@mui/material";
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
+import { useAlert } from "../custom/CustomAlert";
 
 const AddDish = () => {
   const [selectedImage, setselectedImage] = useState(null);
+  const { showAlert } = useAlert();
 
   let submitDishData = async (e) => {
     e.preventDefault();
@@ -34,7 +37,7 @@ const AddDish = () => {
           },
         }
       );
-      alert("Food Saved Successfully");
+      showAlert("Food Saved Successfully", "success");
     } catch (error) {
       console.log(error);
     }
@@ -44,120 +47,131 @@ const AddDish = () => {
     <>
       <Box
         sx={{
-          height: "85vh",
+          overflow: "hidden",
+          mt: 10,
+          height: "83vh",
           width: "100%",
           display: "flex",
           justifyContent: "center",
-          mt: 9,
+          alignItems: "center",
         }}
       >
-        <Box
-          component={"form"}
-          onSubmit={submitDishData}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 1.5,
-            p: 3,
-            boxShadow: 3,
-            height: "100%",
-          }}
-        >
-          <Typography
-            variant="h4"
-            align="center"
+        <Card>
+          <Box
+            component={"form"}
+            onSubmit={submitDishData}
             sx={{
-              fontWeight: 700,
-              fontSize: "2rem",
-              background: "linear-gradient(90deg, #FF9800, #FFC107)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
-              mb: 1,
+              display: "flex",
+              flexDirection: "column",
+              gap: 1.5,
+              p: 3,
+              height: "100%",
+              width: "550px",
             }}
           >
-            Add Dish
-          </Typography>
+            <Typography
+              variant="h4"
+              align="center"
+              sx={{
+                fontWeight: 600,
+                fontSize: "40px",
+                color: "#1CB5E0",
+                mb: 1,
+              }}
+            >
+              Add Dish
+            </Typography>
 
-          <TextField
-            type="text"
-            name="foodname"
-            label="Dish Name"
-            variant="outlined"
-          />
-
-          <TextField
-            type="text"
-            name="description"
-            label="Description"
-            variant="outlined"
-          />
-
-          <TextField
-            type="number"
-            name="price"
-            label="Price"
-            variant="outlined"
-          />
-
-          <FormControl>
-            <FormLabel>Select Category</FormLabel>
-            <RadioGroup row name="category" defaultValue="beverage">
-              <FormControlLabel
-                label="Appetizer"
-                value="appetizer"
-                control={<Radio />}
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <TextField
+                size="small"
+                type="text"
+                name="foodname"
+                label="Dish Name"
+                variant="outlined"
               />
-              <FormControlLabel
-                label="Beverage"
-                value="beverage"
-                control={<Radio />}
-              />
-              <FormControlLabel
-                label="Main-course"
-                value="main-course"
-                control={<Radio />}
-              />
-              <FormControlLabel
-                label="Dessert"
-                value="dessert"
-                control={<Radio />}
-              />
-            </RadioGroup>
-          </FormControl>
 
-          <TextField
-            type="file"
-            onChange={(e) => setselectedImage(e.target.files[0])}
-            name="foodimage"
-            label="Dish Image"
-            variant="outlined"
-          />
+              <TextField
+                size="small"
+                type="number"
+                name="price"
+                label="Price"
+                variant="outlined"
+              />
+            </Box>
+            <TextField
+              size="small"
+              type="text"
+              name="description"
+              label="Description"
+              variant="outlined"
+            />
 
-          <Button
-            type="submit"
-            variant="contained"
-            color="warning"
-            sx={{
-              borderRadius: "999px",
-              textTransform: "uppercase",
-              minWidth: "120px",
-              height: "45px",
-              fontWeight: "bold",
-              fontSize: "20px",
-              background: "#fd8d1d",
-              background:
-                "linear-gradient(90deg, rgb(253, 104, 29) 0%, rgb(249, 227, 29) 100%)",
-              transition: "all 0.2s ease-in-out",
-              "&:hover": {
-                translate: "0 6px",
-                boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-              },
-            }}
-          >
-            Add Dish
-          </Button>
-        </Box>
+            <FormControl sx={{ fontSize: 14 }}>
+              <FormLabel sx={{ fontSize: 17 }}>Select Category</FormLabel>
+              <RadioGroup row name="category" defaultValue="beverage">
+                <FormControlLabel
+                  label="Appetizer"
+                  value="appetizer"
+                  control={<Radio sx={{ transform: "scale(0.8)" }} />}
+                  sx={{ "& .MuiFormControlLabel-label": { fontSize: 16 } }}
+                />
+                <FormControlLabel
+                  label="Beverage"
+                  value="beverage"
+                  control={<Radio sx={{ transform: "scale(0.8)" }} />}
+                  sx={{ "& .MuiFormControlLabel-label": { fontSize: 16 } }}
+                />
+                <FormControlLabel
+                  label="Main-course"
+                  value="main-course"
+                  control={<Radio sx={{ transform: "scale(0.8)" }} />}
+                  sx={{ "& .MuiFormControlLabel-label": { fontSize: 16 } }}
+                />
+                <FormControlLabel
+                  label="Dessert"
+                  value="dessert"
+                  control={<Radio sx={{ transform: "scale(0.8)" }} />}
+                  sx={{ "& .MuiFormControlLabel-label": { fontSize: 16 } }}
+                />
+              </RadioGroup>
+            </FormControl>
+
+            <FormControl>
+              <FormLabel sx={{ fontSize: 16 }}>Dish Image</FormLabel>
+              <TextField
+                type="file"
+                onChange={(e) => setselectedImage(e.target.files[0])}
+                name="foodimage"
+                variant="outlined"
+              />
+            </FormControl>
+
+            <Box
+              sx={{ height: "100%", display: "flex", justifyContent: "center",p:2 }}
+            >
+              <Button
+                type="submit"
+                variant="contained"
+                color="warning"
+                sx={{
+                  height: "35px",
+                  width: "150px",
+                  fontSize: "13px",
+                  background: "linear-gradient(to right, #1CB5E0, #000851)",
+                  color: "#fff",
+                  textTransform: "capitalize",
+                  "&:hover": {
+                    background: "linear-gradient(to right, #1a91da, #000544)",
+                    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                  },
+                }}
+              >
+                Add Dish
+              </Button>
+            </Box>
+          </Box>
+        </Card>
       </Box>
     </>
   );
