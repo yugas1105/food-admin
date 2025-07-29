@@ -71,29 +71,46 @@ const Customers = () => {
           getRowId={(row) => row._id}
           rows={allCustomers}
           columns={columns}
-          rowHeight={55}
+          rowHeight={36} // compact row height
           pagination={false}
           hideFooter
           sx={{
-            // Header row background
-            
-             "& .MuiDataGrid-columnHeaders": {
-    backgroundColor: "#1976d2 !important",
-  },
-            // Header text color and bold
-            "& .MuiDataGrid-columnHeaderTitle": {
-              color: "#000",
-              // bgcolor:"#1976d2 !important",
-              fontWeight: "bold",
+            borderRadius: 2,
+            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+
+            "& .MuiDataGrid-columnHeaders": {
+              backgroundColor: "#1976d2",
+              // color: "#ffffff",
+              "& .MuiDataGrid-columnHeaderTitle": {
+                fontWeight: "bold",
+                fontSize: "1rem",
+              },
             },
-            // Row text color
+
             "& .MuiDataGrid-cell": {
-              color: "#000",
-              //  backgroundColor: "#1976d2 ", // black
+              whiteSpace: "normal",
+              wordBreak: "break-word",
+              fontSize: "0.9rem",
+              padding: "10px 12px", // more vertical spacing
+              lineHeight: "1.5rem",
             },
-            // Optional: white column separators
-            "& .MuiDataGrid-columnSeparator": {
-              color: "#fff",
+
+            "& .MuiDataGrid-cell": {
+              whiteSpace: "normal",
+              wordBreak: "break-word",
+              fontSize: "0.85rem",
+              padding: "6px 8px",
+              lineHeight: "1.4rem",
+            },
+
+            "& .MuiDataGrid-row": {
+              "&:hover": {
+                backgroundColor: "#f5f5f5",
+              },
+            },
+
+            "& .MuiDataGrid-virtualScroller": {
+              overflow: "auto !important",
             },
           }}
         />

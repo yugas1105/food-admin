@@ -80,7 +80,7 @@ const AllDishes = () => {
 
   let deleteDishreq = async (dishId) => {
     try {
-      let result = await axios.delete("http://localhost:5000/api/deletefood", {
+      let result = await axios.delete(`http://localhost:5000/api/deletefood`, {
         data: { foodId: dishId },
       });
       closeDialog();
@@ -105,7 +105,7 @@ const AllDishes = () => {
 
   return (
     <>
-      <Box sx={{ mt: 11 }}>
+      <Box sx={{ mt: 10 }}>
         <Stack sx={{ justifyContent: "center" }} direction="row" spacing={2}>
           <Chip
             label="All"
@@ -150,7 +150,7 @@ const AllDishes = () => {
               }}
               key={dish._id}
             >
-              <Box sx={{ padding: "3px" }}>
+              <Box sx={{ padding: "3px", mb: 8, mt:4 }}>
                 <Card sx={{ height: "400px"}}>
                   <CardMedia
                     component="img"

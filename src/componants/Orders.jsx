@@ -21,6 +21,8 @@ import {
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import { useEffect, useState } from "react";
 import { useAlert } from "../custom/CustomAlert";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import BillPDF from "../template/BillPDF";
 
 //Update Order Status Dialog Admin
 //fetch orders using axios and material-react-table
@@ -48,22 +50,21 @@ const Orders = () => {
     fetchOrders();
   }, []);
 
-  
-    let updateOrderStatus = async (orderId, status) => {
-      try {
-        let result = await axios.put(`http://localhost:5000/api/updateorder`, {
-          orderId,
-          status,
-        });
-        showAlert("Order Status Updated Successfully", "success");
-        setordId("");
-        setordStatus("");
-        setisOpen(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-  
+  let updateOrderStatus = async (orderId, status) => {
+    try {
+      let result = await axios.put(`http://localhost:5000/api/updateorder`, {
+        orderId,
+        status,
+      });
+      showAlert("Order Status Updated Successfully", "success");
+      setordId("");
+      setordStatus("");
+      setisOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   let columns = [
     {
       accessorKey: "createdAt",
@@ -74,10 +75,10 @@ const Orders = () => {
       accessorKey: "customer.name",
       header: "Customer Name",
     },
-    {
-      accessorKey: "customer.email",
-      header: "Customer Email",
-    },
+    // {
+    //   accessorKey: "customer.email",
+    //   header: "Customer Email",
+    // },
     {
       accessorKey: "status",
       header: "Order Status",
@@ -106,6 +107,21 @@ const Orders = () => {
         );
       },
     },
+    {
+      accessorFn: (row) => row,
+      header: "Bills",
+      Cell: ({ cell }) => {
+        let row = cell.getValue();
+        return (
+          <PDFDownloadLink
+            fileName={`invoice_${row.customer.name}.pdf`}
+            document={<BillPDF order={row} />}
+          >
+            {({ loading }) => (loading ? "Generating..." : "Print")}
+          </PDFDownloadLink>
+        );
+      },
+    },
   ];
 
   let orderTable = useMaterialReactTable({
@@ -113,26 +129,6 @@ const Orders = () => {
     data: allOrders,
     enablePagination: false,
 
-    // Set consistent row height
-    muiTableBodyRowProps: () => ({
-      sx: {
-        height: 50,
-        "&:hover": {
-          backgroundColor: "#f5f5f5",
-        },
-      },
-    }),
-
-    // Style body cells (including text wrapping)
-    muiTableBodyCellProps: {
-      sx: {
-        whiteSpace: "normal",
-        wordBreak: "break-word",
-        fontSize: "0.95rem",
-        padding: "12px",
-        verticalAlign: "top",
-      },
-    },
 
     // Optional: style header cells
     muiTableHeadCellProps: {
@@ -144,11 +140,22 @@ const Orders = () => {
       },
     },
 
-    // Optional: add hover or border effects to the table container
-    muiTableContainerProps: {
+    muiTableBodyRowProps: () => ({
       sx: {
-        borderRadius: "8px",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+        height: 36, // Reduce height
+        "&:hover": {
+          backgroundColor: "#f5f5f5",
+        },
+      },
+    }),
+    
+    muiTableBodyCellProps: {
+      sx: {
+        whiteSpace: "normal",
+        wordBreak: "break-word",
+        fontSize: "0.85rem", // smaller font
+        padding: "4px 8px", // reduced padding
+        verticalAlign: "middle",
       },
     },
   });

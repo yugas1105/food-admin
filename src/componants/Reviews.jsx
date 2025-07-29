@@ -21,7 +21,7 @@ const Reviews = () => {
         setallReviews(data);
       } catch (error) {
         console.log(error);
-      }finally{
+      } finally {
         setisLoading(false);
       }
     };
@@ -52,44 +52,34 @@ const Reviews = () => {
     data: allReviews,
     enablePagination: false,
 
-    // Set consistent row height
-  muiTableBodyRowProps: () => ({
-    sx: {
-      height: 70,
-      '&:hover': {
-        backgroundColor: '#f5f5f5',
+    muiTableBodyCellProps: {
+      sx: {
+        whiteSpace: "normal",
+        wordBreak: "break-word",
+        fontSize: "0.85rem", // smaller font
+        padding: "4px 8px", // reduced padding
+        verticalAlign: "middle",
       },
     },
-  }),
 
-  // Style body cells (including text wrapping)
-  muiTableBodyCellProps: {
-    sx: {
-      whiteSpace: 'normal',
-      wordBreak: 'break-word',
-      fontSize: '0.95rem',
-      padding: '12px',
-      verticalAlign: 'top',
-    },
-  },
+    muiTableBodyRowProps: () => ({
+      sx: {
+        height: 48, // Reduce height
+        "&:hover": {
+          backgroundColor: "#f5f5f5",
+        },
+      },
+    }),
 
-  // Optional: style header cells
-  muiTableHeadCellProps: {
-    sx: {
-      backgroundColor: '#1976d2',
-      color: '#ffffff',
-      fontWeight: 'bold',
-      fontSize: '1rem',
+    muiTableHeadCellProps: {
+      sx: {
+        backgroundColor: "#1976d2",
+        color: "#ffffff",
+        fontWeight: "bold",
+        fontSize: "0.9rem", // slightly smaller
+        padding: "6px 8px",
+      },
     },
-  },
-
-  // Optional: add hover or border effects to the table container
-  muiTableContainerProps: {
-    sx: {
-      borderRadius: '8px',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-    },
-  }
   });
 
   return (

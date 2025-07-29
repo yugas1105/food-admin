@@ -1,10 +1,14 @@
 import { Box, Typography } from "@mui/material";
+import { BarChart } from "@mui/x-charts/BarChart";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+
+const ALL_CATEGORIES = ["appetizer", "main-course", "dessert", "beverage"];
 
 const Dashboard = () => {
   const [counterData, setcounterData] = useState({});
   const [totalRevenue, setTotalRevenue] = useState(0);
+  const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
     let fetchCounterData = async () => {
@@ -23,7 +27,24 @@ const Dashboard = () => {
     fetchCounterData();
   }, []);
 
- 
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(
+        `http://localhost:5000/api/fetchcategoryforchart`
+      );
+      // Fill missing categories with zero
+      const map = new Map(
+        res.data.map((item) => [item.category, item.totalAmount])
+      );
+      const completeData = ALL_CATEGORIES.map((cat) => ({
+        category: cat,
+        totalAmount: map.get(cat) || 0,
+      }));
+      setChartData(completeData);
+    };
+    fetchData();
+  }, []);
+
   const boxStyle = {
     // border: '2px solid #ddd',
     borderRadius: "16px",
@@ -92,6 +113,34 @@ const Dashboard = () => {
           <Typography variant="body1">Total Orders</Typography>
           <Typography variant="h4">{counterData.orderCounter}</Typography>
         </Box>
+      </Box>
+
+      <Box sx={{mt:5}}>
+        <BarChart
+        xAxis={[
+          {
+            id: "category",
+            data: chartData.map((item) => item.category),
+            label: "Category",
+            scaleType: "band",
+          },
+        ]}
+        yAxis={[
+          {
+            label: "Total ₹ Amount",
+          },
+        ]}
+        series={[
+          {
+            data: chartData.map((item) => item.totalAmount),
+            label: "Delivered ₹ Amount",
+            color: "#1976d2", // optional: customize bar color
+            barThickness: 50,
+          },
+        ]}
+        width={900}
+        height={490}
+      />
       </Box>
     </>
   );
