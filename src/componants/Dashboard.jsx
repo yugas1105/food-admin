@@ -115,32 +115,37 @@ const Dashboard = () => {
         </Box>
       </Box>
 
-      <Box sx={{mt:5}}>
+      <Box sx={{ mt: 5 }}>
         <BarChart
-        xAxis={[
-          {
-            id: "category",
-            data: chartData.map((item) => item.category),
-            label: "Category",
-            scaleType: "band",
-          },
-        ]}
-        yAxis={[
-          {
-            label: "Total ₹ Amount",
-          },
-        ]}
-        series={[
-          {
-            data: chartData.map((item) => item.totalAmount),
-            label: "Delivered ₹ Amount",
-            color: "#1976d2", // optional: customize bar color
-            barThickness: 50,
-          },
-        ]}
-        width={900}
-        height={490}
-      />
+          xAxis={[
+            {
+              id: "category",
+              data: chartData.map((item) => item.category),
+              label: "Category",
+              scaleType: "band",
+            },
+          ]}
+          yAxis={[
+            {
+              label: "Total ₹ Amount",
+            },
+          ]}
+          series={[
+            {
+              data: chartData.map((item) => item.totalAmount),
+              label: "Delivered ₹ Amount",
+              color: "red",
+            },
+          ]}
+          width={700}
+          height={450}
+          slotProps={{
+            bar: {
+              barCategoryGap: 0.5, // Default is 0.2 – higher value = more space = thinner bars
+              barGap: 0.5, // Space between bars in a group
+            },
+          }}
+        />
       </Box>
     </>
   );

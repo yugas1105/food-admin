@@ -30,6 +30,20 @@ const Reviews = () => {
 
   let columns = [
     {
+  header: "Sr No.",
+  accessorFn: (row, index) => index + 1,
+  id: "rowNumber",
+  size: 25,        // very small width
+  maxSize: 30,     // restricts it from expanding
+  enableSorting: false,
+  enableColumnResizing: false, // optional: lock column width
+  Cell: ({ cell }) => (
+    <div style={{ textAlign: "center" }}>{cell.getValue()}</div>
+  ),
+  Header: () => <div style={{ textAlign: "center" }}>Sr No.</div>, // optional short header
+},
+
+    {
       accessorKey: "customer.name",
       header: "Customer Name",
     },

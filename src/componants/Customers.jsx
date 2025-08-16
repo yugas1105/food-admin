@@ -22,7 +22,9 @@ const Customers = () => {
   }, []);
 
   const columns = [
-    { field: "_id", headerName: "ID", width: 60 },
+    
+    // { field: "_id", headerName: "ID", width: 60 },
+    
     {
       field: "name",
       headerName: "Customer Name",
