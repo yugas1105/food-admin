@@ -15,7 +15,7 @@ const Reviews = () => {
       setisLoading(true);
       try {
         let result = await axios.get(
-          `http://localhost:5000/api/fetchallreviews`
+          `http://localhost:5000/api/fetchallreviews`,
         );
         let data = result.data;
         setallReviews(data);
@@ -30,18 +30,18 @@ const Reviews = () => {
 
   let columns = [
     {
-  header: "Sr No.",
-  accessorFn: (row, index) => index + 1,
-  id: "rowNumber",
-  size: 25,        // very small width
-  maxSize: 30,     // restricts it from expanding
-  enableSorting: false,
-  enableColumnResizing: false, // optional: lock column width
-  Cell: ({ cell }) => (
-    <div style={{ textAlign: "center" }}>{cell.getValue()}</div>
-  ),
-  Header: () => <div style={{ textAlign: "center" }}>Sr No.</div>, // optional short header
-},
+      header: "Sr No.",
+      accessorFn: (row, index) => index + 1,
+      id: "rowNumber",
+      size: 25, // very small width
+      maxSize: 30, // restricts it from expanding
+      enableSorting: false,
+      enableColumnResizing: false, // optional: lock column width
+      Cell: ({ cell }) => (
+        <div style={{ textAlign: "center" }}>{cell.getValue()}</div>
+      ),
+      Header: () => <div style={{ textAlign: "center" }}>Sr No.</div>, // optional short header
+    },
 
     {
       accessorKey: "customer.name",
@@ -98,7 +98,7 @@ const Reviews = () => {
 
   return (
     <>
-      <Box>
+      {/* <Box>
         <Typography
           variant="h5"
           sx={{
@@ -108,9 +108,11 @@ const Reviews = () => {
         >
           Reviews
         </Typography>
+      </Box> */}
+      <Box sx={{mt:2}}>
+       
+        <MaterialReactTable table={reviewTable} />
       </Box>
-
-      <MaterialReactTable table={reviewTable} />
     </>
   );
 };

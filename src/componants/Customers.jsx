@@ -21,6 +21,8 @@ const Customers = () => {
     fetchCustomers();
   }, []);
 
+console.log(allCustomers);
+
   const columns = [
     
     // { field: "_id", headerName: "ID", width: 60 },
@@ -60,7 +62,7 @@ const Customers = () => {
   return (
     <>
       <Box sx={{ height: 400, width: "100%", mt: 10 }}>
-        <Typography
+        {/* <Typography
           variant="h5"
           sx={{
             textAlign: "center",
@@ -68,7 +70,7 @@ const Customers = () => {
           }}
         >
           Customers
-        </Typography>
+        </Typography> */}
         <DataGrid
           getRowId={(row) => row._id}
           rows={allCustomers}

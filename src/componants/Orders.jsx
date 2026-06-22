@@ -86,8 +86,8 @@ const Orders = () => {
       Cell: ({ cell }) => new Date(cell.getValue()).toLocaleDateString(),
     },
     {
-      accessorKey: "customer.name",
       header: "Customer Name",
+      accessorFn: (row) => row.customer?.name || "N/A",
     },
     // {
     //   accessorKey: "customer.email",
@@ -126,9 +126,10 @@ const Orders = () => {
       header: "Bills",
       Cell: ({ cell }) => {
         let row = cell.getValue();
+        console.log("ORDER ROW", row);
         return (
           <PDFDownloadLink
-            fileName={`invoice_${row.customer.name}.pdf`}
+            fileName={`invoice_${row.customer?.name || "customer"}.pdf`}
             document={<BillPDF order={row} />}
           >
             {({ loading }) => (loading ? "Generating..." : "Print")}
@@ -183,7 +184,7 @@ const Orders = () => {
 
   return (
     <>
-      <Box>
+      {/* <Box>
         <Typography
           variant="h5"
           sx={{
@@ -193,9 +194,11 @@ const Orders = () => {
         >
           Orders
         </Typography>
-      </Box>
+      </Box> */}
 
-      <MaterialReactTable table={orderTable} />
+      <Box sx={{ mt: 2 }}>
+        <MaterialReactTable table={orderTable} />
+      </Box>
 
       <Box>
         <Dialog open={isOpen} onClose={() => setisOpen(false)} fullWidth>
